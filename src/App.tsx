@@ -1,35 +1,24 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter, Route, Routes, Navigate, Link } from 'react-router-dom'
+import PhotoListPage from './pages/PhotoListPage'
+import PhotoDetailPage from './pages/PhotoDetailPage'
 
-function App() {
-  const [count, setCount] = useState(0)
-
+export default function App() {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <BrowserRouter>
+      <header className="sticky top-0 z-10 bg-white/70 backdrop-blur border-b border-slate-200">
+        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+          <Link to="/photos" className="text-lg font-semibold text-slate-800">Picsum Gallery</Link>
+          <nav className="text-sm text-slate-600">
+            <Link to="/photos" className="hover:text-slate-900">Home</Link>
+          </nav>
+        </div>
+      </header>
+      <Routes>
+        <Route path="/photos" element={<PhotoListPage />} />
+        <Route path="/photo/:id" element={<PhotoDetailPage />} />
+        <Route path="/" element={<Navigate to="/photos" replace />} />
+        <Route path="*" element={<Navigate to="/photos" replace />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
-
-export default App
